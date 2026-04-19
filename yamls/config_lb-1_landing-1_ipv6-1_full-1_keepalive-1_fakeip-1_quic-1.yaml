@@ -46,6 +46,7 @@ proxy-groups:
       - 新加坡节点
       - 日本节点
       - 美国节点
+      - 直连
   - name: 落地节点
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Airport.png
     type: select
