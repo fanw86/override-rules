@@ -925,27 +925,16 @@ function main(config) {
         frontProxySelector,
     });
 
-    /**
-     * GLOBAL 组需要枚举所有已生成的策略组名称，因此在其他组构建完成后追加，
-     * 同时保留 `include-all` 以确保与各内核的兼容性。
-     *
-     * 例外：如果订阅中存在带 `dialer-proxy` 的节点（典型场景是链式代理的落地节点），
-     * 则跳过生成 GLOBAL 组。原因是 Stash 将 `GLOBAL` 视为保留名并做特殊展开，
-     * 只要 config 里定义了自定义 GLOBAL 组，无论是否使用 `include-all`，
-     * Stash 都会判定含 `dialer-proxy` 的节点形成循环引用而拒绝加载。
-     * 省略 GLOBAL 后，Stash/Mihomo 内核仍提供内置的 GLOBAL，功能不受影响。
-     */
-    const hasDialerProxy = (resultConfig.proxies || []).some((proxy) => proxy["dialer-proxy"]);
-    if (!hasDialerProxy) {
-        const globalProxies = proxyGroups.map((item) => item.name);
-        proxyGroups.push({
-            name: PROXY_GROUPS.GLOBAL,
-            icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Global.png`,
-            "include-all": true,
-            type: "select",
-            proxies: globalProxies,
-        });
-    }
+
+    // const globalProxies = proxyGroups.map((item) => item.name);
+    // proxyGroups.push({
+    //     name: PROXY_GROUPS.GLOBAL,
+    //     icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Global.png`,
+    //     "include-all": true,
+    //     type: "select",
+    //     proxies: globalProxies,
+    // });
+
 
     const finalRules = buildRules({ quicEnabled });
 
