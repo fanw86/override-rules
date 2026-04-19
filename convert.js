@@ -461,10 +461,9 @@ function buildBaseLists({ landing, lowCostNodes, countryGroupNames, nonLandingNo
      * "前置代理"候选列表：优先国家节点组。
      * 非 regex 模式下，再拼接所有非落地节点名称枚举（如包含"美国 01"，排除"美国落地 01"）。
      */
-    const frontProxySelector = [...new Set(buildList(
-        countryGroupNames,
-        !regexFilter && nonLandingNodes
-    ))];
+    const frontProxySelector = [
+        ...new Set(buildList(countryGroupNames, !regexFilter && nonLandingNodes)),
+    ];
 
     return {
         defaultProxies,
@@ -680,36 +679,36 @@ function buildProxyGroups({
         },
         landing
             ? {
-                name: PROXY_GROUPS.FRONT_PROXY,
-                icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Area.png`,
-                type: "select",
-                /**
-                 * regex 模式：`include-all` 拉取所有节点，`exclude-filter` 排除落地节点，
-                 * 同时在 `proxies` 里附加手动指定的候选组名列表（各国家组等）。
-                 * 枚举模式：直接列出候选组名（落地节点已在构建 `frontProxySelector` 时过滤）。
-                 */
-                ...(regexFilter
-                    ? {
-                        "include-all": true,
-                        "exclude-filter": LANDING_PATTERN,
-                        proxies: frontProxySelector,
-                    }
-                    : { proxies: frontProxySelector }),
-            }
+                  name: PROXY_GROUPS.FRONT_PROXY,
+                  icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Area.png`,
+                  type: "select",
+                  /**
+                   * regex 模式：`include-all` 拉取所有节点，`exclude-filter` 排除落地节点，
+                   * 同时在 `proxies` 里附加手动指定的候选组名列表（各国家组等）。
+                   * 枚举模式：直接列出候选组名（落地节点已在构建 `frontProxySelector` 时过滤）。
+                   */
+                  ...(regexFilter
+                      ? {
+                            "include-all": true,
+                            "exclude-filter": LANDING_PATTERN,
+                            proxies: frontProxySelector,
+                        }
+                      : { proxies: frontProxySelector }),
+              }
             : null,
         landing
             ? {
-                name: PROXY_GROUPS.LANDING,
-                icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Airport.png`,
-                type: "select",
-                /**
-                 * regex 模式：`include-all` + `filter` 动态筛选落地节点。
-                 * 枚举模式：直接列出已识别的落地节点名称。
-                 */
-                ...(regexFilter
-                    ? { "include-all": true, filter: LANDING_PATTERN }
-                    : { proxies: landingNodes }),
-            }
+                  name: PROXY_GROUPS.LANDING,
+                  icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Airport.png`,
+                  type: "select",
+                  /**
+                   * regex 模式：`include-all` + `filter` 动态筛选落地节点。
+                   * 枚举模式：直接列出已识别的落地节点名称。
+                   */
+                  ...(regexFilter
+                      ? { "include-all": true, filter: LANDING_PATTERN }
+                      : { proxies: landingNodes }),
+              }
             : null,
         {
             name: PROXY_GROUPS.STATIC_RESOURCES,
@@ -840,14 +839,14 @@ function buildProxyGroups({
         },
         lowCostNodes.length > 0 || regexFilter
             ? {
-                name: PROXY_GROUPS.LOW_COST,
-                icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Lab.png`,
-                type: "url-test",
-                url: "https://cp.cloudflare.com/generate_204",
-                ...(!regexFilter
-                    ? { proxies: lowCostNodes }
-                    : { "include-all": true, filter: "(?i)0\\.[0-5]|低倍率|省流|大流量|实验性" }),
-            }
+                  name: PROXY_GROUPS.LOW_COST,
+                  icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Lab.png`,
+                  type: "url-test",
+                  url: "https://cp.cloudflare.com/generate_204",
+                  ...(!regexFilter
+                      ? { proxies: lowCostNodes }
+                      : { "include-all": true, filter: "(?i)0\\.[0-5]|低倍率|省流|大流量|实验性" }),
+              }
             : null,
         {
             name: PROXY_GROUPS.AUTO,
@@ -893,8 +892,13 @@ function main(config) {
     /**
      * 构建各类通用候选列表，供后续策略组复用。
      */
-    const { defaultProxies, defaultProxiesDirect, defaultSelector, defaultFallback, frontProxySelector } =
-        buildBaseLists({ landing, lowCostNodes, countryGroupNames, nonLandingNodes });
+    const {
+        defaultProxies,
+        defaultProxiesDirect,
+        defaultSelector,
+        defaultFallback,
+        frontProxySelector,
+    } = buildBaseLists({ landing, lowCostNodes, countryGroupNames, nonLandingNodes });
 
     /**
      * 为每个地区生成对应的 `url-test` 或 `load-balance` 自动测速组。
