@@ -8,7 +8,7 @@ https://github.com/powerfullz/override-rules
 - ipv6: 启用 IPv6 支持（默认 false）
 - full: 输出完整配置（适合纯内核启动，默认 false）
 - keepalive: 启用 tcp-keep-alive（默认 false）
-- fakeip: DNS 使用 FakeIP 模式（默认 false，false 为 RedirHost）
+- fakeip: DNS 使用 FakeIP 模式（默认 true，false 为 RedirHost）
 - quic: 允许 QUIC 流量（UDP 443，默认 false）
 - threshold: 国家节点数量小于该值时不显示分组 (默认 0)
 - regex: 使用正则过滤模式（include-all + filter）写入各国家代理组，而非直接枚举节点名称（默认 false）
@@ -27,6 +27,16 @@ const LOW_COST_FILTER = "0\\.[0-5]|低倍率|省流|实验性";
 const LOW_COST_REGEX = new RegExp(LOW_COST_FILTER, "i");
 const LANDING_REGEX = /家宽|家庭宽带|商宽|商业宽带|星链|Starlink|落地/i;
 const LANDING_PATTERN = "(?i)家宽|家庭宽带|商宽|商业宽带|星链|Starlink|落地";
+const FEATURE_FLAG_DEFAULTS = {
+    loadBalance: false,
+    landing: false,
+    ipv6Enabled: false,
+    fullConfig: false,
+    keepAliveEnabled: false,
+    fakeIPEnabled: true,
+    quicEnabled: false,
+    regexFilter: false,
+};
 
 const rawArgs = (() => {
     try {
@@ -371,10 +381,15 @@ function buildFeatureFlags(args) {
         regex: "regexFilter",
     };
 
-    const flags = Object.entries(spec).reduce((acc, [sourceKey, targetKey]) => {
-        acc[targetKey] = parseBool(args[sourceKey]) || false;
-        return acc;
-    }, {});
+    const flags = {};
+    for (const [sourceKey, targetKey] of Object.entries(spec)) {
+        const rawValue = args[sourceKey];
+        if (rawValue === null || typeof rawValue === "undefined") {
+            flags[targetKey] = FEATURE_FLAG_DEFAULTS[targetKey];
+        } else {
+            flags[targetKey] = parseBool(rawValue);
+        }
+    }
 
     /**
      * `threshold` 是数字参数，不经过 parseBool，需单独处理。
@@ -458,10 +473,14 @@ function buildBaseLists({ landing, lowCostNodes, countryGroupNames, nonLandingNo
     );
 
     /**
-     * "前置代理"候选列表：优先国家节点组。
+     * "前置代理"候选列表：优先国家节点组、DIRECT
      * 再拼接所有非落地节点名称枚举
      */
-    const frontProxySelector = buildList(countryGroupNames, !regexFilter && nonLandingNodes);
+    const frontProxySelector = buildList(
+        countryGroupNames,
+        PROXY_GROUPS.DIRECT,
+        !regexFilter && nonLandingNodes
+    );
 
     return {
         defaultProxies,
