@@ -478,7 +478,7 @@ function buildBaseLists({ landing, lowCostNodes, countryGroupNames, nonLandingNo
      */
     const frontProxySelector = buildList(
         countryGroupNames,
-        PROXY_GROUPS.DIRECT,
+        "DIRECT",
         !regexFilter && nonLandingNodes
     );
 
@@ -944,14 +944,18 @@ function main(config) {
         frontProxySelector,
     });
 
-    // const globalProxies = proxyGroups.map((item) => item.name);
-    // proxyGroups.push({
-    //     name: PROXY_GROUPS.GLOBAL,
-    //     icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Global.png`,
-    //     "include-all": true,
-    //     type: "select",
-    //     proxies: globalProxies,
-    // });
+    /**
+     * 完整书写 GLOBAL 代理组
+     * https://wiki.metacubex.one/config/proxy-groups/built-in/
+     */
+    const globalProxies = proxyGroups.map((item) => item.name);
+    proxyGroups.push({
+        name: PROXY_GROUPS.GLOBAL,
+        icon: `${CDN_URL}/gh/Koolson/Qure@master/IconSet/Color/Global.png`,
+        "include-all": true,
+        type: "select",
+        proxies: globalProxies,
+    });
 
     const finalRules = buildRules({ quicEnabled });
 
