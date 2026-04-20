@@ -1,10 +1,20 @@
-/*
+/*!
 powerfullz 的 Substore 订阅转换脚本
 https://github.com/powerfullz/override-rules
 
+支持的传入参数：
+- loadbalance: 启用负载均衡（url-test/load-balance，默认 false）
+- landing: 启用落地节点功能（如机场家宽/星链/落地分组，默认 false）
+- ipv6: 启用 IPv6 支持（默认 false）
+- full: 输出完整配置（适合纯内核启动，默认 false）
+- keepalive: 启用 tcp-keep-alive（默认 false）
+- fakeip: DNS 使用 FakeIP 模式（默认 true，false 为 RedirHost）
+- quic: 允许 QUIC 流量（UDP 443，默认 false）
+- threshold: 地区节点数量小于该值时不显示分组 (默认 0)
+- regex: 使用正则过滤模式（include-all + filter）写入各地区代理组，而非直接枚举节点名称（默认 false）
+
 源码说明：
-- 源码已迁移至 `src/*.ts`
-- 由 CI 编译输出根目录 `convert.js`，再压缩为 `convert.min.js`
+- 源码已迁移至 `src/*.ts` 文件，使用 TypeScript 编写，编译后输出到 `dist/*.js`。
 */
 
 import {
