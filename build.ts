@@ -16,12 +16,15 @@ const commonOptions: esbuild.BuildOptions = {
     banner: { js: bannerText },
 };
 
-await Promise.all([
+Promise.all([
     esbuild.build({ ...commonOptions, outfile: "convert.js" }),
     esbuild.build({
         ...commonOptions,
         minify: true,
         outfile: "convert.min.js",
-        drop: ["debugger"],
+        drop: ["debugger"], 
     }),
-]);
+]).catch((err) => {
+    console.error(err);
+    process.exit(1);
+});
