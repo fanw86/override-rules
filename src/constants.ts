@@ -1,7 +1,7 @@
 import type { CountryMeta } from "./types";
 
 export const NODE_SUFFIX = "节点";
-export const CDN_URL = "https://gcore.jsdelivr.net";
+export const CDN_URL = "https://cdn.jsdelivr.net";
 
 /**
  * `LANDING_PATTERN` 与 `LANDING_REGEX` 描述同一规则，但格式不同：
