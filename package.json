@@ -10,6 +10,7 @@
     "build": "npm run typecheck && tsx build.ts",
     "generate": "tsx yaml_generator/generator.ts",
     "artifacts": "npm run build && npm run generate",
+    "version:sync-tag": "node scripts/sync-version-from-tag.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

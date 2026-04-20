@@ -136,7 +136,7 @@ proxies:
 
 > [!NOTE]
 > 为了保持代码仓库的纯净，`main` 主分支不再跟踪和提交生成的产物文件（如 `convert.js` 和 `yamls/`）。
-> 这些构建产物目前统一由 Github Actions 的 Release 工作流在发布 `v*` 版本时，构建并自动推送到当前分支及 Release 中。
+> 这些构建产物目前统一由 Github Actions 的 Release 工作流在发布 `v*` 版本时，构建并自动推送到当前分支及 Release 中；工作流会自动根据 Tag（例如 `v2.1.0`）同步 `package.json` / `package-lock.json` 的版本号，无需手动改版本。
 
 获取 YAML 覆写文件的链接格式如下：
 
