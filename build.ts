@@ -22,6 +22,6 @@ await Promise.all([
         ...commonOptions,
         minify: true,
         outfile: "convert.min.js",
-        drop: ["debugger"], 
+        drop: ["debugger"],
     }),
 ]);
