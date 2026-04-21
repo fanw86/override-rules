@@ -10,7 +10,7 @@ const commonOptions: esbuild.BuildOptions = {
     bundle: true,
     platform: "neutral",
     format: "iife",
-    target: "es2020",
+    target: "ES2025",
     legalComments: "none",
     charset: "utf8",
     banner: { js: bannerText },
