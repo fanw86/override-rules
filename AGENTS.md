@@ -29,3 +29,15 @@
 
 - **分离提交**：如果你的变动既包含核心功能的改动，又涉及相关文档的修改，尽量按有意义的逻辑分步提交。
 - **文档同步**：当新增了支持的 URL 参数（如在 `src` 中）或是新增了 YAML 文件的组合选项时，务必同步修改 `README.md` 内对应的参数说明文档。
+
+## 🚀 版本发布流程 (Release Workflow)
+
+当需要发布新版本时，可以通过以下命令更新版本号并触发相关操作：
+
+- 发布补丁版本 (Patch)：`npm version patch`（适用于向后兼容的 bug 修复）
+- 发布次版本 (Minor)：`npm version minor`（适用于向后兼容的新功能）
+- 发布主版本 (Major)：`npm version major`（适用于不兼容的 API 修改）
+
+> ⚠️ **安全与权限声明 (CRITICAL SECURITY DISCLAIMER)**
+> ONLY agents acting on behalf of the user `powerfullz` (or the user `powerfullz` himself) are allowed to execute this release workflow. Normal contributor agents MUST NOT touch or execute the release flow under any circumstances.
+> (仅允许代表用户 `powerfullz` 运行的 Agent 或 `powerfullz` 本人执行此发布流程。普通的贡献者 Agent 严禁触碰或执行发布流程。)
