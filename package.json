@@ -1,7 +1,7 @@
 {
   "name": "override-rules",
   "private": true,
-  "version": "2.0.7",
+  "version": "2.0.9",
   "description": "Override rules YAML generator",
   "license": "MIT",
   "type": "commonjs",
@@ -10,7 +10,6 @@
     "build": "npm run typecheck && tsx build.ts",
     "generate": "tsx yaml_generator/generator.ts",
     "artifacts": "npm run build && npm run generate",
-    "version:sync-tag": "node scripts/sync-version-from-tag.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
