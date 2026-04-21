@@ -61,6 +61,7 @@ const {
     quicEnabled,
     regexFilter,
     countryThreshold,
+    customRules,
 } = buildFeatureFlags(rawArgs);
 
 function main(config: ClashConfig): ClashConfig {
@@ -120,7 +121,7 @@ function main(config: ClashConfig): ClashConfig {
         proxies: globalProxies,
     });
 
-    const finalRules = buildRules({ quicEnabled });
+    const finalRules = buildRules({ quicEnabled, customRules });
 
     if (fullConfig) {
         Object.assign(resultConfig, {

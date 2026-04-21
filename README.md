@@ -63,6 +63,7 @@
 *   `quic`：允许 QUIC 流量（UDP 443，默认 false）[^quic]
 *   `regex`：各国家/地区代理组改用 `include-all` + 正则过滤模式，由 Mihomo 内核在运行时按正则动态筛选节点，而非在脚本执行时枚举节点名称（默认 false）[^regex]
 *   `threshold`：国家/地区节点数量小于该值时不显示分组（默认 0）
+*   `customRules`：自定义域名分流（默认空），格式 `domain|group,domain|group`，例如 `psi.net|AI服务,example.com|直连`
 
 [^landing]: 注意在默认的枚举模式下，如果没有符合条件的落地节点（e.g 名称中带有「家宽」、「商宽」、「落地」等关键词的节点），内核会无法启动。
 [^quic]: 默认屏蔽了 QUIC 流量防止节点 UDP 性能不佳影响上网体验，如果确信节点质量良好，建议设置为 true。

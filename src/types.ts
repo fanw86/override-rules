@@ -2,6 +2,11 @@ export type UnknownRecord = Record<string, unknown>;
 
 export type ScriptArgs = UnknownRecord;
 
+export interface CustomRule {
+    domain: string;
+    group: string;
+}
+
 export interface FeatureFlags {
     loadBalance: boolean;
     landing: boolean;
@@ -12,6 +17,7 @@ export interface FeatureFlags {
     quicEnabled: boolean;
     regexFilter: boolean;
     countryThreshold: number;
+    customRules: CustomRule[];
 }
 
 export interface ProxyNode extends UnknownRecord {
