@@ -17,7 +17,7 @@ export default [
     {
         files: ["**/*.js"],
         languageOptions: {
-            ecmaVersion: 2020,
+            ecmaVersion: 2026,
             sourceType: "commonjs",
             globals: {
                 // Node.js 全局变量
